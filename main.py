@@ -20,7 +20,7 @@ class User(db.Model):
 @app.route("/users")
 def user_list():
     users = db.session.execute(db.select(User).order_by(User.username)).scalars()
-    return render_template("user/list.html", users=users)
+    return render_template("list.html", users=users)
 
 @app.route("/users/create", methods=["GET", "POST"])
 def user_create():
@@ -33,12 +33,12 @@ def user_create():
         db.session.commit()
         return redirect(url_for("user_detail", id=user.id))
 
-    return render_template("user/create.html")
+    return render_template("create.html")
 
 @app.route("/user/<int:id>")
 def user_detail(id):
     user = db.get_or_404(User, id)
-    return render_template("user/detail.html", user=user)
+    return render_template("detail.html", user=user)
 
 @app.route("/user/delete/<int:id>", methods=["GET", "POST"])
 def user_delete(id):
@@ -49,7 +49,7 @@ def user_delete(id):
         db.session.commit()
         return redirect(url_for("user_list"))
 
-    return render_template("user/delete.html", user=user)
+    return render_template("delete.html", user=user)
    
 
 
